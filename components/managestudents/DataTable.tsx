@@ -8,10 +8,12 @@ import type { FormInstance } from 'antd/es/form';
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
-  key: string;
-  name: string;
-  age: string;
-  address: string;
+  key:number
+  id: number;
+  firstName: string;
+  lastName: string;
+  regNo: number;
+  emailAddress: string;
 }
 
 interface EditableRowProps {
@@ -103,9 +105,11 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  name: string;
-  age: string;
-  address: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  regNo: number;
+  emailAddress: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
@@ -114,15 +118,19 @@ const DataTable: React.FC = () => {
   const [dataSource, setDataSource] = useState<DataType[]>([
     {
       key: '0',
-      name: 'Edward King 0',
-      age: '32',
-      address: 'London, Park Lane no. 0',
+      id: 1,
+      firstName: `Edward 0`,
+      lastName: `King`,
+      regNo: 32,
+      emailAddress: `edwardking`,
     },
     {
       key: '1',
-      name: 'Edward King 1',
-      age: '32',
-      address: 'London, Park Lane no. 1',
+      id: 2,
+      firstName: `Edward 1`,
+      lastName: `King`,
+      regNo: 33,
+      emailAddress: `edwardking`,
     },
   ]);
 
@@ -136,18 +144,34 @@ const DataTable: React.FC = () => {
 
   const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
     {
-      title: 'name',
-      dataIndex: 'name',
-      width: '30%',
+      title: 'ID',
+      dataIndex: 'id',
+      width: '10%',
+    },
+    {
+      title: 'First Name',
+      dataIndex: 'firstName',
+      width: '15%',
+      editable: true,
+
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      width: '15%',
       editable: true,
     },
     {
-      title: 'age',
-      dataIndex: 'age',
+      title: 'Reg. No',
+      dataIndex: 'regNo',
+      width: '10%',
+      editable: true,
     },
     {
-      title: 'address',
-      dataIndex: 'address',
+      title: 'emailAddress',
+      dataIndex: 'emailAddress',
+      width: '15%',
+      editable: true,
     },
     {
       title: 'operation',
@@ -164,10 +188,12 @@ const DataTable: React.FC = () => {
 
   const handleAdd = () => {
     const newData: DataType = {
-      key: count,
-      name: `Edward King ${count}`,
-      age: '32',
-      address: `London, Park Lane no. ${count}`,
+      key: count - 1,
+      id: count,
+      firstName: `Edward  ${count}`,
+      lastName: 'king',
+      regNo: 32,
+      emailAddress: `London, Park Lane no. ${count}`,
     };
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
